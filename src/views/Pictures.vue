@@ -3,7 +3,7 @@
         <h1>Pictures</h1>
         <button v-on:click="initData">Pictures</button>
 
-        <section v-if="destination" class="destination">
+        <!--         <section v-if="destination" class="destination">
             <h2>{{ destination.name }}</h2>
             <div class="destination-details">
                 <img :src="`/images/${destination.image}`" :alt="destination.name">
@@ -18,7 +18,11 @@
                 <ExperienceCard :picture="picture" />
             </RouterLink>
         </div>
-    </section>
+    </section> -->
+
+        <div v-for="picture in pictures">
+            {{ picture.description }}
+        </div>
     </main>
 </template>
 
@@ -27,7 +31,7 @@ import sourceData from '@/data.json'
 export default {
     data() {
         return {
-            pictures: null
+            pictures: []
         }
     },
     methods: {
@@ -41,7 +45,7 @@ export default {
             };
 
             fetch(`http://localhost:8080/pictures`, requestOptions)
-            .then(async response => {
+                .then(async response => {
                     const data = await response.json();
 
                     // check for error response
@@ -52,11 +56,8 @@ export default {
                     }
                     console.log('pictures found')
                     console.log(data)
-                    this.pictures = data
-                    console.log(this.pictures);
-                   return this.pictures;
+                    this.pictures = data;
 
-             
                 })
                 .catch(error => {
                     this.errorMessage = error;
@@ -65,12 +66,12 @@ export default {
 
         }
     },
-  /*  computed: {
-        destinationId() {
-            return parseInt(this.$route.params.id)
-        },
-
-    },*/
+    /*  computed: {
+          destinationId() {
+              return parseInt(this.$route.params.id)
+          },
+  
+      },*/
     async created() {
         this.initData()
     }
