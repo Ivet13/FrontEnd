@@ -1,13 +1,14 @@
 import { createRouter, createWebHistory, useRoute } from "vue-router";
 import sourceData from "@/data.json";
 
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  linkActiveClass: 'sweet-active-link',
-  routes: [
+const routes = [
     {
       path: "/",
+      alias: ['/index.html'],
       name: "home",
+      // route level code-splitting
+      // this generates a separate chunk (homeview.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
       component: () => import("../views/HomeView.vue"),
     },
     {
@@ -61,21 +62,26 @@ const router = createRouter({
       component: () => import("../views/NotFound.vue"),
 
     },
-  ],
+  ];
+
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  linkActiveClass: 'sweet-active-link',
+  routes,
   scrollBehavior(to, from, savedPosition) {
     return savedPosition || new Promise((resolve) => {
       setTimeout(() => resolve({ top: 0 }), 1000)
     })
   }
-});
+})
 
 router.beforeEach((to, from) => {
   if (to.meta.requiresAuth && !window.user) {
     // needs to login if not already logged in
-    return { 
+    return {
       name: 'login',
-      query: { redirect: to.fullPath}
-   }
+      query: { redirect: to.fullPath }
+    }
   }
 })
 
