@@ -1,13 +1,22 @@
 <template>
-    <div class="login">
-        <h1>Login</h1>
-        <form class="form" @submit.prevent="login">
-            <label for="email">Email</label>
-            <input v-model="email" name="email" type="text" class="input" required placeholder="email">
-            <label for="password">Password</label>
-            <input v-model="password" name="password" type="text" class="input" required placeholder="password">
+    <div class="container is-fluid">
+        <h1 class="title">Login</h1>
+        <form class="box" @submit.prevent="login">
+            <div class="field">
+                <label class="label" for="email">Email</label>
+                <div class="control">
+                    <input v-model="email" name="email" type="text" class="input" required placeholder="email">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label" for="password">Password</label>
+                <div class="control">
+                    <input v-model="password" name="password" type="password" class="input" required
+                        placeholder="password">
+                </div>
+            </div>
             <p v-if="error" class="error">Invalid username or password.</p>
-            <button class="btn">Submit</button>
+            <button class="button is-primary">Submit</button>
         </form>
     </div>
 

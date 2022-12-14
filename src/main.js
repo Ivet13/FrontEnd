@@ -5,7 +5,7 @@ import AppLink from "./components/AppLink.vue";
 
 import "./../node_modules/bulma/css/bulma.css";
 
-import "./assets/main.css";
+//import "./assets/main.css";
 
 const app = createApp(App);
 

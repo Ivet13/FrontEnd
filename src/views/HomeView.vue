@@ -4,7 +4,7 @@
     <p>This is a project to demonstrate the use of vue.js + bulma in frontend and GO in backend.</p>
   </main>
 
-  <RouterLink :to="{ name: 'register' }">Create account
+  <RouterLink class="button" :to="{ name: 'register' }">Create account
   </RouterLink>
 </template>
 

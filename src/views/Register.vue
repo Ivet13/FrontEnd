@@ -1,14 +1,29 @@
 <template>
-    <div class="register">
-        <h1>Create account</h1>
-        <form class="form" @submit.prevent="register">
-            <label for="email">Email</label>
-            <input v-model="email" name="email" type="text" class="input">
-            <label for="password">Password</label>
-            <input v-model="password" name="password" type="text" class="input">
-            <label for="password">Repeat password</label>
-            <input v-model="passwordRepeat" name="passwordRepeat" type="text" class="input">
-            <button class="btn">Submit</button>
+    <div class="container is-fluid">
+        <h1 class="title">Create account</h1>
+        <form class="box" @submit.prevent="register">
+            <div class="field">
+                <label class="label" for="email">Email</label>
+                <div class="control">
+                    <input v-model="email" name="email" type="text" class="input" required placeholder="email">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label" for="password">Password</label>
+                <div class="control">
+                    <input v-model="password" name="password" type="password" class="input" required
+                        placeholder="password">
+                </div>
+            </div>
+            <div class="field">
+            <label class="label" for="passwordRepeat">Repeat password</label>
+            <div class="control">
+            <input v-model="passwordRepeat" name="passwordRepeat" type="password" class="input" required
+                        placeholder="repeat password"> 
+                    </div>
+            </div>
+            <p v-if="error" class="error">Passwords do not match.</p>
+            <button class="button is-primary">Submit</button>
         </form>
     </div>
 

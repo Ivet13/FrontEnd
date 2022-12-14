@@ -1,8 +1,20 @@
 <template>
-    <main>
-        <h1>Pictures</h1>
-        <button v-on:click="initData">Pictures</button>
+    <main class="box">
+        <h1 class="title">Pictures</h1>
+        <div>
+            <div>
+                <button @click="showFileSelect = !showFileSelect">Select a file</button>
+            </div>
+            <div v-show="showFileSelect">
+                <FileUpload :maxSize="1" accept="jpg" @file-uploaded="getUploadedData" />
+            </div>
 
+            <div v-if="fileSelected">
+                Successfully Selected file: {{ file.name }}.{{ file.fileExtention }}
+            </div>
+
+            <button v-on:click="submitFile()">Submit</button>
+        </div>
         <!--         <section v-if="destination" class="destination">
             <h2>{{ destination.name }}</h2>
             <div class="destination-details">
@@ -22,7 +34,7 @@
         <div v-if="pictures != null" class="columns">
 
             <div v-for="picture in pictures" :key="picture" class="column">
-                First column
+
                 <div class="card">
                     <div class="card-image">
                         <figure class="image is-4by3">
@@ -57,10 +69,17 @@
 
 <script>
 import sourceData from '@/data.json'
+import FileUpload from "@/components/FileUpload.vue";
 export default {
+    components: {
+        FileUpload
+    },
     data() {
         return {
-            pictures: []
+            pictures: [],
+            file: {},
+            fileSelected: false,
+            showFileSelect: false,
         }
     },
     methods: {
@@ -69,7 +88,7 @@ export default {
 
             const requestOptions = {
                 method: 'GET',
-                headers: { 'Authorization': 'Bearer c87671824aeca236a41bc5a9ea50aaeab51d4f34854532e945f82a3bcece1ad1' },
+                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') },
 
             };
 
@@ -93,7 +112,50 @@ export default {
                     console.error('There was an error!', error);
                 });
 
-        }
+        },
+        getUploadedData(file) {
+            this.fileSelected = true;
+            this.showFileSelect = false;
+            this.file = file;
+        },
+        /*
+                Submits the file to the server
+              */
+        submitFile() {
+            /*
+                    Initialize the form data
+                */
+            let formData = new FormData();
+
+            /*
+                Add the form data we need to submit
+            */
+            formData.append('file', this.file);
+
+            /*
+              Make the request to the POST /single-file URL
+            */
+        
+            fetch('http://localhost:8080/pictures', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'multipart/form-data'
+                },
+                body: formData
+            })
+                .then(function (response) {
+                    if (response.status != 201) {
+                        this.fetchError = response.status;
+                    } else {
+                        response.json().then(function (data) {
+                            this.fetchResponse = data;
+                        }.bind(this));
+                    }
+                }.bind(this));
+        },
+
     },
     /*  computed: {
           destinationId() {
