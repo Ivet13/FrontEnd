@@ -7,10 +7,12 @@ import "./../node_modules/bulma/css/bulma.css";
 
 //import "./assets/main.css";
 
+//CREATING APP INSTANCE 
 const app = createApp(App);
 
 app.component(AppLink)
 
 app.use(router);
 
+//MOUNTING TO THE DOM
 app.mount("#app");
