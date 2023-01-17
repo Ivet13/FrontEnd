@@ -37,6 +37,7 @@ const routes = [
       path: "/test/:id/:slug",
       name: "destination.show",
       component: () => import("../views/DestinationShow.vue"),
+      //casting id from URL to integer via props
       props: route => ({ ...route.params, id: parseInt(route.params.id) }),
       beforeEnter(to, from) {
         const exists = sourceData.destinations.find(
@@ -73,10 +74,11 @@ const routes = [
     },
     {
       //test page
-      path: "/cukrovinky/:id",
+      path: "/cukrovinky/:id/:slug",
       name: "choco.show",
       // next comment inside function is so-called magic comment
-      component: () => import(/* webpackChunkName: "brazil" */ "../views/CokoRoute.vue")
+      component: () => import(/* webpackChunkName: "brazil" */ "../views/CokoRoute.vue"),
+      props: route => ({id: parseInt(route.params.id)}),
     }
   ];
 

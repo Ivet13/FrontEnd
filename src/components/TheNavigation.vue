@@ -26,6 +26,14 @@
                         </RouterLink>
                         <RouterLink class="button is-light" :to="{ name: 'register' }">Sign up
                         </RouterLink>
+
+                        <router-link 
+                            class="button is-light"
+                            v-for="destination in destinations" 
+                            :key="destination.id"
+                            :to="{ name: 'choco.show', params: { id: destination.id, slug: destination.slug } }">
+                            {{ destination.name }}
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -56,4 +64,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-});</script>
+});
+
+import sourceData from '@/data.json'
+export default{
+    data(){
+        return{
+            destinations: sourceData.destinations
+        }
+    }
+}
+</script>
