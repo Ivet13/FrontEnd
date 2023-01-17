@@ -3,17 +3,12 @@ import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
-
-
     <TheNavigation />
 
     <div class="container">
-      <RouterView v-slot="{ Component }">
-      </RouterView>
-
-
+      <RouterView v-slot="{ Component }"></RouterView>
     </div>
-
+    <TheFooter />
 </template>
 
 <script>
@@ -22,6 +17,7 @@ import AppLink from "@/components/AppLink.vue";
 export default {
   components: { TheNavigation, AppLink }
 }
+import TheFooter from "@/components/TheFooter.vue";
 </script>
 
 <style lang="css">

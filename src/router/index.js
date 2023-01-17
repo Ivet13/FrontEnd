@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, useRoute } from "vue-router";
 import sourceData from "@/data.json";
 
+//ROUTE RECORDS
 const routes = [
     {
       path: "/",
