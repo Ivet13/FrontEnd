@@ -1,11 +1,10 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import router from "./router";      //index.js
+import router from "./router";      //IMPORT ROUTER - index.js
 import AppLink from "./components/AppLink.vue";
 
 import "./../node_modules/bulma/css/bulma.css";
-
-//import "./assets/main.css";
+// import "./assets/main.css";
 
 //CREATING APP INSTANCE 
 const app = createApp(App);

@@ -1,7 +1,8 @@
 <template>
     
     <footer>
-        <div>Footer test @ 2023</div>
+        <RouterLink to="/about">About</RouterLink> 
+        <div>TeamKK @ 2023</div>
     </footer>
 
 </template>

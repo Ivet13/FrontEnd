@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory, useRoute } from "vue-router";
 import sourceData from "@/data.json";
+//Home is not lazyloaded, we want the initial page loaded as on initial render
+import Home from "@/views/HomeView.vue";
 
 //ROUTE RECORDS
 const routes = [
@@ -7,14 +9,14 @@ const routes = [
       path: "/",
       alias: ['/index.html'],
       name: "home",
-      // route level code-splitting
-      // this generates a separate chunk (homeview.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import("../views/HomeView.vue"),
+      component: Home,
     },
     {
       path: "/register",
       name: "register",
+      // route level code-splitting
+      // this generates a separate chunk (homeview.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
       component: () => import("../views/Register.vue"),
     },
     {
@@ -31,6 +33,7 @@ const routes = [
       }
     },
     {
+      //DYNAMIC ROUTE
       path: "/test/:id/:slug",
       name: "destination.show",
       component: () => import("../views/DestinationShow.vue"),
@@ -67,13 +70,22 @@ const routes = [
       path: "/about", 
       name: "About", 
       component: () => import("../views/About.vue"), 
+    },
+    {
+      //test page
+      path: "/cukrovinky/:id",
+      name: "choco.show",
+      // next comment inside function is so-called magic comment
+      component: () => import(/* webpackChunkName: "brazil" */ "../views/CokoRoute.vue")
     }
   ];
 
+//ROUTER INSTANCE WITH HTML5 HISTORY MODE
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  //LinkActiveClass == the class that will mark active page. 
   linkActiveClass: 'sweet-active-link',
-  routes,
+  routes, //ROUTE RECORDS USED HERE
   scrollBehavior(to, from, savedPosition) {
     return savedPosition || new Promise((resolve) => {
       setTimeout(() => resolve({ top: 0 }), 1000)
@@ -91,4 +103,5 @@ router.beforeEach((to, from) => {
   }
 })
 
+//EXPORT ROUTER INSTANCE
 export default router;

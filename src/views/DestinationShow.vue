@@ -23,6 +23,7 @@
 <script>
 import sourceData from '@/data.json';
 import GoBack from '@/components/GoBack.vue';
+
 export default {
     components: { ExperienceCard, GoBack },
     props: {
