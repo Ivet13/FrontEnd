@@ -25,6 +25,7 @@ const routes = [
       component: () => import("../views/Login.vue"),
     },
     {
+      //ROUTE META FIELDS example
       path: "/pictures",
       name: "pictures",
       component: () => import("../views/Pictures.vue"),
@@ -79,6 +80,33 @@ const routes = [
       // next comment inside function is so-called magic comment
       component: () => import(/* webpackChunkName: "brazil" */ "../views/CokoRoute.vue"),
       props: route => ({id: parseInt(route.params.id)}),
+      //NAVIGATION GUARDS - checks if the route that is served even exists
+      beforeEnter(to, from) {
+        const exists = sourceData.destinations.find(
+          destination => destination.id === parseInt(to.params.id)
+        )
+        //If there is no route as in defined data.json file, route will be redirected to 404
+        if (!exists) return {
+          name: "NotFound",
+          //allows keeping the URL while rendering a different page
+          params: { pathMatch: to.path.split('/').slice(1) },
+          query: to.query,
+          hash: to.hash
+
+        }
+      },
+      //NESTED ROUTE
+      children:[
+        {
+          // path: '/cukrovinky/:id/:slug/:experienceSlug',
+          path: ':experienceSlug',
+          name: 'experience.show',
+          // component: () => import('@/views/ExperienceShow.vue'),
+          component: () => import('@/views/ExperienceShow.vue'),
+          //we send all the possible child routes to the child template by SPREAD OPERATOR
+          props: route => ({ ...route.params, id: parseInt(route.params.id)}),
+        }
+      ]
     }
   ];
 
@@ -87,10 +115,13 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   //LinkActiveClass == the class that will mark active page. 
   linkActiveClass: 'sweet-active-link',
-  routes, //ROUTE RECORDS USED HERE
+  //ROUTE RECORDS USED HERE
+  routes, 
+  //SCROLL BEHAVIOUR - Handles position of a scroll when navigating on our routed pages
   scrollBehavior(to, from, savedPosition) {
+    // return {top: null, left:null, behavior:null}
     return savedPosition || new Promise((resolve) => {
-      setTimeout(() => resolve({ top: 0 }), 1000)
+      setTimeout(() => resolve({ top: 0 }), 1000) //we set the jump to the top of the page, with timeout
     })
   }
 })
