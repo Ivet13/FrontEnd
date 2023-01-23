@@ -1,14 +1,11 @@
 <template>
-    <section v-if="experience" class="experience">test
-        <h1>{{ experience.name }}</h1>
-        <div class="experience-details">
-            <img :src="`/images/${experience.image}`" :alt="experience.name">
-            <p>{{ experience.description }}</p>
-        </div>
+    <section class="experience">
+        <!-- <h1>{{ experience.name }}</h1> -->
+      
+      
     </section>
 
 </template>
-
 <script>
 import sourceData from '@/data.json'
 export default {
@@ -23,7 +20,6 @@ export default {
                 (experience) => experience.id === this.id
             );
         }
-
     }
 }
 </script>
