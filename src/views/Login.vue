@@ -5,6 +5,7 @@
             <div class="field">
                 <label class="label" for="email">Email</label>
                 <div class="control">
+                    <!-- v-model binds these values to data -->
                     <input v-model="email" name="email" type="text" class="input" required placeholder="email">
                 </div>
             </div>
@@ -17,6 +18,7 @@
             </div>
             <p v-if="error" class="error">Invalid username or password.</p>
             <button class="button is-primary">Submit</button>
+            <button class="button" @click="logout">Dummy Logout</button>
         </form>
     </div>
 
@@ -60,7 +62,10 @@ export default {
 
                     window.user = this.email
 
-                    //redirect to pictures view             
+                    // this.$router.push({name: 'protected'})            
+
+                    //redirect to pictures view after succesfull login
+                    //the path is defined by the URL in the button?=query parameter || protected route
                     const redirectPath = this.$route.query.redirect || '/pictures'
                     this.$router.push(redirectPath)
                 })
@@ -68,6 +73,10 @@ export default {
                     this.errorMessage = error;
                     console.error('There was an error!', error);
                 });
+        },
+        logout(){
+            window.user = null;
+            this.$router.push({name: 'home'})
         }
     }
 }

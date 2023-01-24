@@ -20,6 +20,7 @@ import { RouterLink, RouterView } from "vue-router";
 
 <script>
 import TheNavigation from "@/components/TheNavigation.vue";
+//APPLINK == internal and external custom handler
 import AppLink from "@/components/AppLink.vue";
 export default {
   components: { TheNavigation, AppLink }

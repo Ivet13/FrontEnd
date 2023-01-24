@@ -3,6 +3,7 @@
         <p>Greetings, {{ username }}</p>
         <button @click="logout">Logout</button>
         <RouterLink to="/pictures"><button>Pictures</button></RouterLink>
+        <RouterLink :to="{name: 'pictures'}"><button>Pictures</button></RouterLink>
     </div>
 </template>
 
