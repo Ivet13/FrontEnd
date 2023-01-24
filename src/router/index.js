@@ -34,6 +34,23 @@ const routes = [
       }
     },
     {
+      //DEPRECATED - surpassed by /pictures
+      path: "/protected",
+      name: "protected",
+      component: () => import("../views/Protected.vue"),
+      meta: {
+        requiresAuth: true,
+      }
+    },
+    {
+      path: "/protected",
+      name: "protected",
+      component: () => import("../views/Protected.vue"),
+      meta: {
+        requiresAuth: true,
+      }
+    },
+    {
       //DYNAMIC ROUTE
       path: "/test/:id/:slug",
       name: "destination.show",
@@ -126,7 +143,11 @@ const router = createRouter({
   }
 })
 
+//GLOBAL NAVIGATION GUARD
+//CHECK FOR ATTACHED ARBITRARY INFORMATION TO A ROUTE-LIKE META FIELDS/PROTECTED PAGES
+//BEFORE EXPORTING THE ROUTER THIS FUNCTION WILL RUN
 router.beforeEach((to, from) => {
+  //window.user is set in 'login.vue' in authentification method
   if (to.meta.requiresAuth && !window.user) {
     // needs to login if not already logged in
     return {
